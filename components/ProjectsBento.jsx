@@ -89,13 +89,13 @@ function BentoCard({ p, i, t, dark }) {
           target="_blank"
           rel="noopener noreferrer"
           className="bento-link"
-          aria-label={`Visit website: ${p.title}`}
+          aria-label={`${p.linkLabel ?? "Visit website"}: ${p.title}`}
           style={{ color: t.muted }}
           onMouseOver={e => { e.currentTarget.style.color = t.text; }}
           onMouseOut={e => { e.currentTarget.style.color = t.muted; }}
         >
           <span className="bento-live" style={{ background: t.accent }} aria-hidden="true" />
-          Visit website ↗
+          {p.linkLabel ?? "Visit website"} ↗
         </a>
       )}
     </div>

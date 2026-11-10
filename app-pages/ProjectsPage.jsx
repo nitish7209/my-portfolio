@@ -105,11 +105,11 @@ export function ProjectsPage({ t }) {
                 <a
                   href={p.live} target="_blank" rel="noopener noreferrer"
                   className="proj-link" style={{ color: t.muted }}
-                  aria-label={`Visit website: ${p.title}`}
+                  aria-label={`${p.linkLabel ?? "Visit website"}: ${p.title}`}
                   onMouseOver={e => e.currentTarget.style.color = t.text}
                   onMouseOut={e => e.currentTarget.style.color = t.muted}
                 >
-                  Visit website ↗
+                  {p.linkLabel ?? "Visit website"} ↗
                 </a>
               )}
             </m.div>
