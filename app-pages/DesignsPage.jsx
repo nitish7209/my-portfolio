@@ -9,14 +9,14 @@ const CSS = `
   .designs-page { max-width: 1100px; margin: 0 auto; padding: 4rem 1.5rem 6rem; }
   .designs-top  { margin-bottom: 48px; animation: designFadeIn .55s both; }
   .designs-tag  { font-family: 'Geist Mono', monospace; font-size: 11px; margin-bottom: 10px; }
-  .designs-h1   { font-family: 'Geist', sans-serif; font-weight: 700; letter-spacing: -.05em; line-height: .94; margin-bottom: 16px; }
+  .designs-h1   { font-family: 'Geist', sans-serif; font-weight: 500; letter-spacing: -.035em; line-height: 1; margin-bottom: 16px; }
   .designs-sub  { font-size: 15px; line-height: 1.8; max-width: 480px; }
 
   .designs-filters { display: flex; gap: 8px; margin-bottom: 40px; flex-wrap: wrap; animation: designFadeIn .55s .1s both; }
   .designs-filter  {
     padding: 7px 18px; border-radius: 100px; font-size: 13px;
     background: transparent; cursor: pointer;
-    font-family: 'Geist', sans-serif; transition: all .2s;
+    font-family: 'Geist', sans-serif; transition: color .2s, border-color .2s, background-color .2s;
   }
 
   .designs-masonry { columns: 3 200px; gap: 12px; }

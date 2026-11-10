@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import Link from "next/link";
 import { PROJECTS } from "../lib/data";
 import { useReveal } from "../hooks/useReveal";
@@ -11,109 +11,58 @@ const CSS = `
     display: flex; justify-content: space-between; align-items: flex-end;
     margin-bottom: 32px; flex-wrap: wrap; gap: 12px;
   }
-  .bento-title { font-family: 'Geist', sans-serif; font-weight: 700; letter-spacing: -.04em; }
+  .bento-title { font-family: 'Geist', sans-serif; font-weight: 500; letter-spacing: -.03em; }
   .bento-all   {
     font-family: 'Geist', sans-serif; font-size: 13px;
     background: none; border: none; cursor: pointer; transition: color .2s;
   }
 
   .bento-grid {
-    display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
   }
   .bento-card {
     border-radius: 14px; padding: 1.75rem;
     position: relative; overflow: hidden;
-    transition: transform .3s cubic-bezier(.4,0,.2,1), border-color .25s, box-shadow .3s;
+    border: 1px solid var(--line); background: var(--card);
+    transition: border-color .2s;
     cursor: default;
   }
-  .bento-card:hover { transform: translateY(-5px); }
+  .bento-card:hover { border-color: var(--line-hover); }
   .bento-card.large { grid-column: span 2; }
 
-  .bento-year { position: absolute; top: 18px; right: 18px; font-family: 'Geist Mono', monospace; font-size: 11px; }
+  .bento-year { position: absolute; top: 28px; right: 28px; font-family: 'Geist Mono', monospace; font-size: 11px; line-height: 16px; }
   .bento-num  {
-    font-family: 'Geist', sans-serif; font-size: 56px; font-weight: 700;
-    letter-spacing: -.05em; line-height: 1; margin-bottom: 16px;
+    font-family: 'Geist', sans-serif; font-size: 56px; font-weight: 400;
+    letter-spacing: -.04em; font-variant-numeric: tabular-nums; line-height: 1; margin-bottom: 16px;
     user-select: none;
   }
-  .bento-name { font-family: 'Geist', sans-serif; font-size: 20px; font-weight: 600; letter-spacing: -.03em; margin-bottom: 10px; }
+  .bento-name { font-family: 'Geist', sans-serif; font-size: 20px; font-weight: 500; letter-spacing: -.02em; margin-bottom: 8px; }
   .bento-desc { font-size: 14px; line-height: 1.7; margin-bottom: 20px; }
   .bento-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; }
-  .bento-tag  { padding: 3px 10px; border-radius: 100px; font-size: 11px; font-family: 'Geist Mono', monospace; }
-  .bento-link { font-size: 13px; font-family: 'Geist', sans-serif; text-decoration: none; transition: color .2s; }
+  .bento-tag  { padding: 2px 8px; border-radius: 6px; font-size: 11px; font-family: 'Geist Mono', monospace; }
+  .bento-link { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-family: 'Geist', sans-serif; text-decoration: none; transition: color .2s; }
+  .bento-live { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
   .bento-badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 3px 10px; border-radius: 6px; font-size: 10px;
-    font-family: 'Geist Mono', monospace; font-weight: 600;
-    letter-spacing: .06em; text-transform: uppercase;
-    margin-bottom: 14px;
-  }
-  .bento-card-accent {
-    position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    border-radius: 14px 14px 0 0;
+    display: block; margin-bottom: 16px;
+    font-family: 'Geist Mono', monospace; font-size: 11px; line-height: 16px;
   }
 
   @media(max-width:620px) { .bento-card.large { grid-column: span 1; } }
   @media(max-width:480px) { .bento-grid { grid-template-columns: 1fr; } .bento-card.large { grid-column: span 1; } }
 `;
 
-const BADGE_STYLES = {
-  DevOps: {
-    bg:       "rgba(99,102,241,0.15)",
-    border:   "rgba(99,102,241,0.30)",
-    text:     "#818cf8",
-    gradient: "linear-gradient(to right, #6366f1, #a855f7)",
-  },
-  SaaS: {
-    bg:       "rgba(16,185,129,0.15)",
-    border:   "rgba(16,185,129,0.30)",
-    text:     "#34d399",
-    gradient: "linear-gradient(to right, #10b981, #06b6d4)",
-  },
-};
-
 function BentoCard({ p, i, t, dark }) {
-  const ref = useRef(null);
-  const [glow, setGlow] = useState({ x: 0, y: 0, on: false });
-
-  const badge = p.badge ? BADGE_STYLES[p.badge] : null;
-  const glowColor = dark ? "rgba(255,255,255,0.07)" : "rgba(0,0,0,0.04)";
   const borderHover = dark ? "rgba(255,255,255,0.14)" : "rgba(0,0,0,0.14)";
-  const boxShadowHover = dark
-    ? "0 20px 48px rgba(0,0,0,0.55)"
-    : "0 20px 48px rgba(0,0,0,0.10)";
 
   return (
     <div
-      ref={ref}
       className={`bento-card${p.size === "large" ? " large" : ""}`}
       data-reveal
-      onMouseMove={e => {
-        const r = ref.current.getBoundingClientRect();
-        setGlow({ x: e.clientX - r.left, y: e.clientY - r.top, on: true });
-      }}
-      onMouseLeave={() => setGlow(g => ({ ...g, on: false }))}
-      style={{
-        background: glow.on
-          ? `radial-gradient(circle 360px at ${glow.x}px ${glow.y}px, ${glowColor} 0%, ${t.card} 65%)`
-          : t.card,
-        border: `1px solid ${glow.on ? borderHover : t.border}`,
-        boxShadow: glow.on ? boxShadowHover : "none",
-      }}
+      style={{ "--card": t.card, "--line": t.border, "--line-hover": borderHover }}
     >
-      {badge && (
-        <div
-          className="bento-card-accent"
-          style={{ background: badge.gradient }}
-        />
-      )}
       <span className="bento-year" style={{ color: t.dim }}>{p.year}</span>
-      {badge && (
-        <div
-          className="bento-badge"
-          style={{ background: badge.bg, border: `1px solid ${badge.border}`, color: badge.text }}
-        >
-          <span>⬡</span>{p.badge}
-        </div>
+      {p.badge && (
+        <div className="bento-badge" style={{ color: t.muted }}>{p.badge}</div>
       )}
       <div className="bento-num" style={{ color: t.dim }}>0{i + 1}</div>
       <h3 className="bento-name" style={{ color: t.text }}>{p.title}</h3>
@@ -145,6 +94,7 @@ function BentoCard({ p, i, t, dark }) {
           onMouseOver={e => { e.currentTarget.style.color = t.text; }}
           onMouseOut={e => { e.currentTarget.style.color = t.muted; }}
         >
+          <span className="bento-live" style={{ background: t.accent }} aria-hidden="true" />
           Visit website ↗
         </a>
       )}

@@ -12,12 +12,12 @@ const CSS = `
     margin-bottom: 48px; flex-wrap: wrap; gap: 12px;
   }
   .exp-title {
-    font-family: 'Geist', sans-serif; font-weight: 700; letter-spacing: -.04em;
+    font-family: 'Geist', sans-serif; font-weight: 500; letter-spacing: -.03em;
   }
   .exp-subtitle { font-family: 'Geist Mono', monospace; font-size: 11px; }
 `;
 
-export default function Experience({ t }) {
+export default function Experience({ t, dark }) {
   const ref = useRef(null);
   useReveal(ref);
 
@@ -37,7 +37,7 @@ export default function Experience({ t }) {
           </div>
 
           <div data-reveal>
-            <ExperienceCarousel experiences={EXPERIENCE} t={t} />
+            <ExperienceCarousel experiences={EXPERIENCE} t={t} dark={dark} />
           </div>
         </div>
       </section>

@@ -1,40 +1,21 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { useTypewriter } from "../hooks/useTypewriter";
 import { TYPEWRITER_ROLES } from "../lib/data";
 import { useSite } from "./SiteShell";
-import HeroShader from "./HeroShader";
 import { loadGsap } from "../lib/gsap";
+import { useYearsOfExperience } from "../hooks/useYearsOfExperience";
 
 const HERO_CSS = `
   @keyframes heroCursorBlink {
     0%,100% { opacity: 1; } 50% { opacity: 0; }
-  }
-  @keyframes orbFloat1 {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    33%      { transform: translate(70px, -50px) scale(1.1); }
-    66%      { transform: translate(-50px, 35px) scale(0.95); }
-  }
-  @keyframes orbFloat2 {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    25%      { transform: translate(-90px, 55px) scale(1.06); }
-    75%      { transform: translate(60px, -40px) scale(1.12); }
-  }
-  /* transform + opacity only, so it stays on the compositor */
-  @keyframes badgeDotPulse {
-    0%       { transform: scale(1);   opacity: .5; }
-    70%, 100% { transform: scale(2.6); opacity: 0; }
   }
 
   .hero-section {
     min-height: 94vh; display: flex; align-items: center;
     padding: 6rem 1.5rem 3rem;
     position: relative; overflow: hidden;
-  }
-  .hero-orb {
-    position: absolute; border-radius: 50%;
-    pointer-events: none; will-change: transform;
   }
   .hero-inner {
     max-width: 1100px; margin: 0 auto; width: 100%;
@@ -43,29 +24,21 @@ const HERO_CSS = `
 
   .hero-badge {
     display: inline-flex; align-items: center; gap: 8px;
-    padding: 5px 14px; border-radius: 100px;
+    padding: 4px 12px; border-radius: 100px;
     font-family: 'Geist Mono', monospace; font-size: 12px;
     margin-bottom: 32px;
   }
   .hero-badge-dot {
-    width: 7px; height: 7px; border-radius: 50%; background: #22c55e;
-    flex-shrink: 0; position: relative;
+    width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
   }
-  .hero-badge-dot::after {
-    content: ""; position: absolute; inset: 0; border-radius: 50%;
-    background: #22c55e;
-    animation: badgeDotPulse 2.4s ease-out infinite;
-  }
-  .hero-orbs { position: absolute; inset: 0; pointer-events: none; transition: opacity 1.2s ease; }
   .hero-line { display: block; will-change: transform; }
   .hero-heading {
-    font-family: 'Geist', sans-serif; font-weight: 700;
-    line-height: .94; letter-spacing: -.05em;
+    font-family: 'Geist', sans-serif; font-weight: 500;
+    line-height: 1; letter-spacing: -.035em;
     margin-bottom: 28px;
   }
   .hero-role {
     font-family: 'Geist Mono', monospace;
-    letter-spacing: -.01em;
     margin-bottom: 24px;
   }
   .hero-role-cursor {
@@ -85,21 +58,18 @@ const HERO_CSS = `
     padding: 12px 28px; border-radius: 10px;
     font-weight: 500; font-size: 14px;
     font-family: 'Geist', sans-serif;
-    border: none; cursor: pointer;
-    transition: opacity .2s, transform .2s, box-shadow .2s;
+    border: 1px solid transparent; cursor: pointer;
+    transition: opacity .2s, transform .15s;
   }
-  .hero-btn-primary:hover {
-    opacity: .88; transform: translateY(-2px);
-    box-shadow: 0 10px 28px rgba(0,0,0,.35);
-  }
+  .hero-btn-primary:hover { opacity: .88; }
   .hero-btn-secondary {
     padding: 12px 28px; border-radius: 10px;
     font-weight: 400; font-size: 14px;
     font-family: 'Geist', sans-serif;
     background: transparent; cursor: pointer;
-    transition: border-color .2s, color .2s, transform .2s;
+    transition: border-color .2s, color .2s, transform .15s;
   }
-  .hero-btn-secondary:hover { transform: translateY(-2px); }
+  .hero-btn-primary:active, .hero-btn-secondary:active { transform: scale(.98); }
 
   .hero-stats {
     display: flex;
@@ -107,7 +77,8 @@ const HERO_CSS = `
   .hero-stat { flex: 1; padding: 24px 0; }
   .hero-stat-n {
     font-family: 'Geist', sans-serif; font-size: 30px;
-    font-weight: 700; letter-spacing: -.04em;
+    font-weight: 500; letter-spacing: -.02em;
+    font-variant-numeric: tabular-nums;
   }
   .hero-stat-l { font-size: 13px; margin-top: 4px; }
 
@@ -121,12 +92,12 @@ const HERO_CSS = `
   }
 `;
 
-export default function Hero({ t, dark }) {
+export default function Hero({ t }) {
   const role = useTypewriter(TYPEWRITER_ROLES);
+  const years = useYearsOfExperience();
   const { introDone } = useSite();
   const rootRef  = useRef(null);
   const introRef = useRef(null);
-  const [shaderOn, setShaderOn] = useState(false);
 
   const introDoneRef = useRef(introDone);
 
@@ -164,62 +135,15 @@ export default function Hero({ t, dark }) {
     if (introDone) introRef.current?.play();
   }, [introDone]);
 
-  const orb1 = dark
-    ? "radial-gradient(circle at 50% 50%, rgba(99,102,241,0.28) 0%, transparent 62%)"
-    : "radial-gradient(circle at 50% 50%, rgba(99,102,241,0.10) 0%, transparent 62%)";
-  const orb2 = dark
-    ? "radial-gradient(circle at 50% 50%, rgba(168,85,247,0.20) 0%, transparent 62%)"
-    : "radial-gradient(circle at 50% 50%, rgba(168,85,247,0.07) 0%, transparent 62%)";
-  const dotGrid = dark
-    ? "radial-gradient(circle, rgba(255,255,255,0.055) 1px, transparent 1px)"
-    : "radial-gradient(circle, rgba(0,0,0,0.055) 1px, transparent 1px)";
-
   return (
     <>
       <style>{HERO_CSS}</style>
-      <section
-        ref={rootRef}
-        className="hero-section"
-        style={{ backgroundImage: dotGrid, backgroundSize: "32px 32px" }}
-      >
-        {/* WebGL aurora (desktop) — replaces the CSS orbs once it is running */}
-        <HeroShader dark={dark} start={introDone} onReady={() => setShaderOn(true)} />
-
-        {/* CSS orbs — fallback for mobile / reduced motion / no WebGL.
-            The wrappers carry Locomotive parallax; the inner orbs keep
-            their CSS float animation. */}
-        <div className="hero-orbs" aria-hidden="true" style={{ opacity: shaderOn ? 0 : 1 }}>
-          <div data-scroll data-scroll-speed="-0.15" style={{ position: "absolute", inset: 0 }}>
-            {/* Orb 1 — indigo, top-left */}
-            <div
-              className="hero-orb"
-              style={{
-                width: 820, height: 820,
-                top: "-260px", left: "-200px",
-                background: orb1,
-                animation: "orbFloat1 18s ease-in-out infinite",
-              }}
-            />
-          </div>
-          <div data-scroll data-scroll-speed="0.1" style={{ position: "absolute", inset: 0 }}>
-            {/* Orb 2 — purple, bottom-right */}
-            <div
-              className="hero-orb"
-              style={{
-                width: 620, height: 620,
-                bottom: "-80px", right: "-60px",
-                background: orb2,
-                animation: "orbFloat2 24s ease-in-out infinite",
-              }}
-            />
-          </div>
-        </div>
-
-        <div className="hero-inner" data-scroll data-scroll-speed="0.06">
+      <section ref={rootRef} className="hero-section">
+        <div className="hero-inner">
 
           {/* Status badge */}
           <div className="hero-badge" style={{ border: `1px solid ${t.border}`, color: t.muted }}>
-            <span className="hero-badge-dot" />
+            <span className="hero-badge-dot" style={{ background: t.accent }} />
             Available for new opportunities
           </div>
 
@@ -230,7 +154,7 @@ export default function Hero({ t, dark }) {
           >
             <span className="hero-line">I&apos;m Nitish Kumar</span>
             <span className="hero-line" style={{ color: t.muted }}>MERN Stack Developer</span>
-            <span className="hero-line" style={{ color: t.dim }}>&amp; DevOps Engineer.</span>
+            <span className="hero-line" style={{ color: t.dim }}>&amp; DevOps Engineer</span>
           </h1>
 
           {/* Typewriter role */}
@@ -244,20 +168,20 @@ export default function Hero({ t, dark }) {
 
           {/* Description */}
           <p className="hero-desc" style={{ color: t.muted }}>
-            I craft reliable, maintainable applications with modern frameworks and
-            DevOps best practices. From responsive frontends to automated CI/CD
-            pipelines — solutions that scale beautifully and work flawlessly.
+            I build MERN applications and the pipelines that ship them. React and
+            Node.js on the front and back, GitHub Actions, Docker and Kubernetes
+            for delivery.
           </p>
 
           {/* CTAs */}
           <div className="hero-ctas">
-            <Link
-              href="/projects"
+            <a
+              href="mailto:nitish.kumar.cs57@mail.com"
               className="hero-btn-primary"
               style={{ background: t.text, color: t.inv }}
             >
-              Let&apos;s Connect
-            </Link>
+              Let&apos;s connect
+            </a>
             <Link
               href="/about"
               className="hero-btn-secondary"
@@ -265,14 +189,14 @@ export default function Hero({ t, dark }) {
               onMouseOver={e => { e.currentTarget.style.borderColor = t.muted; e.currentTarget.style.color = t.text; }}
               onMouseOut={e => { e.currentTarget.style.borderColor = t.border; e.currentTarget.style.color = t.muted; }}
             >
-              About Me
+              About me
             </Link>
           </div>
 
           {/* Stats */}
           <div className="hero-stats" style={{ borderTop: `1px solid ${t.border}` }}>
             {[
-              ["2.5+", "Years of experience"],
+              [years,  "Years of experience"],
               ["10+",  "Projects delivered"],
               ["3",    "Industries served"],
             ].map(([n, l], i) => (

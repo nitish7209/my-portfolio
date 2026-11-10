@@ -12,9 +12,9 @@ export default function Home() {
   const { t, dark } = useSite();
   return (
     <>
-      <Hero          t={t} dark={dark} />
+      <Hero          t={t} />
       <MarqueeBand   t={t} />
-      <Experience    t={t} />
+      <Experience    t={t} dark={dark} />
       <ProjectsBento t={t} dark={dark} />
       <SkillsGrid    t={t} dark={dark} />
     </>

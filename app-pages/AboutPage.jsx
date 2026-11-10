@@ -3,6 +3,7 @@
 import { EXPERIENCE } from "../lib/data";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
 import { Mail, Phone } from "lucide-react";
+import { useYearsOfExperience } from "../hooks/useYearsOfExperience";
 
 const CSS = `
   @keyframes aboutFadeUp {
@@ -13,8 +14,8 @@ const CSS = `
   .about-top  { margin-bottom: 52px; animation: aboutFadeUp .55s both; }
   .about-tag  { font-family: 'Geist Mono', monospace; font-size: 11px; margin-bottom: 10px; }
   .about-h1   {
-    font-family: 'Geist', sans-serif; font-weight: 700;
-    letter-spacing: -.05em; line-height: .94; margin-bottom: 14px;
+    font-family: 'Geist', sans-serif; font-weight: 500;
+    letter-spacing: -.035em; line-height: 1; margin-bottom: 14px;
   }
   .about-sub  { font-family: 'Geist', sans-serif; font-weight: 400; letter-spacing: -.03em; }
 
@@ -34,7 +35,7 @@ const CSS = `
     padding: 12px 0; font-size: 14px; line-height: 1.6;
   }
 
-  .about-list-title { font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 14px; }
+  .about-list-title { font-family: 'Geist Mono', monospace; font-size: 12px; margin-bottom: 16px; }
   .about-list-item  {
     font-size: 14px; padding: 11px 0; display: flex; gap: 10px; line-height: 1.6;
   }
@@ -43,6 +44,7 @@ const CSS = `
 `;
 
 export function AboutPage({ t }) {
+  const years = useYearsOfExperience();
   return (
     <>
       <style>{CSS}</style>
@@ -89,7 +91,7 @@ export function AboutPage({ t }) {
                 LinkedIn
               </a>
               <a
-                href="https://github.com/Nitishkumar22"
+                href="https://github.com/nitish7209"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="about-social"
@@ -118,7 +120,7 @@ export function AboutPage({ t }) {
             <div style={{ marginBottom: 32 }}>
               <div className="about-list-title" style={{ color: t.dim }}>Quick Info</div>
               {[
-                "2.5+ years of experience in MERN Stack Development",
+                `${years} years of experience in MERN Stack Development`,
                 "Specialized in MERN stack (MongoDB, Express, React, Node.js)",
                 "Hands-on DevOps experience with Docker, Kubernetes & CI/CD pipelines",
                 "Freelance & Full-time project experience across industries",

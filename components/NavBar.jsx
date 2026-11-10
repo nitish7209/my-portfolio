@@ -21,36 +21,37 @@ const NAV_CSS = `
     -webkit-backdrop-filter: blur(20px);
   }
   .nav-inner {
-    max-width: 1100px; margin: 0 auto; padding: 0 1.5rem;
+    max-width: calc(1100px + 3rem); margin: 0 auto; padding: 0 1.5rem;
     width: 100%;
     display: flex; align-items: center; justify-content: space-between;
   }
   .nav-logo {
     font-family: 'Geist', sans-serif;
-    font-size: 16px; font-weight: 700; letter-spacing: -.04em;
+    font-size: 16px; font-weight: 600; letter-spacing: -.02em;
     display: flex; align-items: center; gap: 8px;
     cursor: pointer; border: none; background: none;
   }
   .nav-logo-box {
     width: 30px; height: 30px; border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 11px; font-weight: 700; flex-shrink: 0;
+    font-size: 11px; font-weight: 600; flex-shrink: 0;
     transition: background .3s, color .3s;
   }
   .nav-links { display: flex; align-items: center; gap: 24px; }
   .nav-link {
     font-family: 'Geist', sans-serif;
-    font-size: 14px; font-weight: 400; letter-spacing: -.01em;
+    font-size: 14px; font-weight: 400;
     border: none; background: none; cursor: pointer;
     position: relative; padding-bottom: 2px;
     transition: color .2s;
   }
   .nav-link::after {
     content: ''; position: absolute; bottom: -2px; left: 0;
-    width: 0; height: 1px; background: currentColor;
-    transition: width .25s ease;
+    width: 100%; height: 1px; background: currentColor;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform .25s ease;
   }
-  .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+  .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
   .nav-resume {
     font-family: 'Geist', sans-serif; font-size: 13px;
     text-decoration: none; transition: color .2s;

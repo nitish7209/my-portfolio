@@ -3,43 +3,36 @@ import { useState, useEffect, useRef } from "react";
 import { SKILL_ICONS } from "../lib/data";
 
 const CSS = `
-  @keyframes skillReveal {
-    from { opacity: 0; transform: translateY(14px) scale(0.86); }
-    to   { opacity: 1; transform: translateY(0) scale(1); }
-  }
   .skills-section { padding: 5rem 1.5rem; }
   .skills-inner   { max-width: 1100px; margin: 0 auto; }
   .skills-header  {
     display: flex; justify-content: space-between; align-items: flex-end;
-    margin-bottom: 44px; flex-wrap: wrap; gap: 12px;
+    margin-bottom: 48px; flex-wrap: wrap; gap: 12px;
   }
-  .skills-title    { font-family: 'Geist', sans-serif; font-weight: 700; letter-spacing: -.04em; }
+  .skills-title    { font-family: 'Geist', sans-serif; font-weight: 500; letter-spacing: -.03em; }
   .skills-subtitle { font-family: 'Geist Mono', monospace; font-size: 11px; }
 
   .skills-group { margin-bottom: 40px; }
   .skills-group:last-child { margin-bottom: 0; }
   .skills-group-label {
-    font-family: 'Geist Mono', monospace; font-size: 11px;
-    letter-spacing: .06em; text-transform: uppercase;
+    font-family: 'Geist Mono', monospace; font-size: 12px;
     margin-bottom: 20px;
   }
   .skills-grid {
-    display: flex; flex-wrap: wrap; gap: 22px; justify-content: center;
+    display: flex; flex-wrap: wrap; gap: 24px; justify-content: center;
   }
   .skill-wrap {
-    display: flex; flex-direction: column; align-items: center; gap: 7px;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
     cursor: default;
   }
   .skill-icon-box {
     width: 52px; height: 52px; border-radius: 14px;
     display: flex; align-items: center; justify-content: center;
-    transition: transform .28s cubic-bezier(.4,0,.2,1), box-shadow .28s;
+    border: 1px solid var(--line);
+    transition: border-color .2s;
     overflow: hidden;
   }
-  .skill-wrap:hover .skill-icon-box {
-    transform: translateY(-6px) scale(1.1);
-    box-shadow: 0 8px 24px rgba(99,102,241,0.35);
-  }
+  .skill-wrap:hover .skill-icon-box { border-color: var(--line-hover); }
   .skill-img {
     width: 100%; height: 100%; display: block; border-radius: 14px;
   }
@@ -48,7 +41,7 @@ const CSS = `
     text-align: center; max-width: 64px; line-height: 1.3;
     transition: color .2s;
   }
-  .skill-wrap:hover .skill-label { color: #818cf8 !important; }
+  .skill-wrap:hover .skill-label { color: var(--label-hover) !important; }
 `;
 
 const SKILL_GROUPS = [
@@ -72,7 +65,16 @@ export default function SkillsGrid({ t, dark }) {
   return (
     <>
       <style>{CSS}</style>
-      <section className="skills-section" style={{ background: t.surface }} ref={ref}>
+      <section
+        className="skills-section"
+        style={{
+          background: t.surface,
+          "--line": t.border,
+          "--line-hover": dark ? "rgba(255,255,255,0.18)" : "rgba(0,0,0,0.18)",
+          "--label-hover": t.text,
+        }}
+        ref={ref}
+      >
         <div className="skills-inner">
           <div
             className="skills-header"
@@ -114,14 +116,13 @@ export default function SkillsGrid({ t, dark }) {
                       title={skill.name}
                       style={{
                         opacity: visible ? 1 : 0,
-                        transform: visible ? "none" : "translateY(14px) scale(0.86)",
-                        transition: `opacity 0.5s ${i * 0.04}s ease, transform 0.5s ${i * 0.04}s ease`,
+                        transform: visible ? "none" : "translateY(8px)",
+                        transition: `opacity 0.5s ${i * 0.02}s ease, transform 0.5s ${i * 0.02}s ease`,
                       }}
                     >
                       <div
                         className="skill-icon-box"
                         style={{
-                          border: `1px solid ${t.border}`,
                           background: dark ? "#1c1c1e" : "#f0f0f2",
                         }}
                       >

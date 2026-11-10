@@ -18,7 +18,7 @@ Modern, minimalist portfolio website for Nitish Kumar - MERN Stack Developer & D
 - **Theme:** next-themes (dark/light mode)
 - **Animations:** GSAP (hero intro, cursor, ScrollTrigger reveals), Motion/Framer Motion (`motion/react` — resume modal, projects filter), CSS keyframes
 - **Smooth scroll:** Locomotive Scroll v5 (built on Lenis, pinned to the same `lenis` version) driven by GSAP's ticker — desktop only
-- **3D:** Three.js + GLSL aurora shader behind the hero — desktop only, lazy-loaded
+- **Accent:** signal green (`t.accent`) only on live things — availability dot, "Present" roles, live project links
 
 ## Project Structure
 Pages are real routes, so each one is exported as its own static HTML file
@@ -39,7 +39,6 @@ Pages are real routes, so each one is exported as its own static HTML file
   RoutePages.jsx       # Client bridges for the server route files
   Loader.jsx           # Signature loader — decorative overlay, page is visible underneath
   SmoothScroll.jsx     # Locomotive/Lenis + ScrollTrigger; exports lockScroll()
-  HeroShader.jsx       # Three.js aurora (lazy, desktop only, falls back to CSS orbs)
   AgentTools.jsx       # WebMCP tools for AI agents (navigator.modelContext)
   CursorFollower.jsx   # gsap.quickTo cursor (fine pointers only)
   NavBar, Footer, Hero, ExperienceCarousel, Experience, MarqueeBand,
@@ -52,7 +51,6 @@ Pages are real routes, so each one is exported as its own static HTML file
   theme.js             # Theme color tokens
   gsap.js              # Lazy loaders for GSAP / ScrollTrigger
   motionFeatures.js    # Lazy Motion features for <LazyMotion>
-  shaders/             # GLSL + Three.js scene for the hero
 /public/icons/skills   # Self-hosted skill icons
 /public/designs        # barba.webm (replaces a 1.3 MB GIF) + poster
 ```
@@ -109,7 +107,7 @@ React, Next.js, TypeScript, JavaScript, HTML, CSS, Tailwind CSS, Node.js, Expres
 - Email: nitish.kumar.cs57@mail.com
 - Phone: +91 7294002072
 - LinkedIn: https://www.linkedin.com/in/nitishkweb/
-- GitHub: https://github.com/Nitishkumar22
+- GitHub: https://github.com/nitish7209
 
 ## Color Scheme
 
@@ -154,7 +152,7 @@ npm start      # Start production server
 
 ## Performance rules
 - Run Lighthouse against `npm run build` output (e.g. `npx serve out`), never `next dev` — dev is unminified.
-- Keep GSAP, ScrollTrigger, Motion, Three.js and Locomotive out of the initial bundle (dynamic imports via lib/gsap.js, LazyMotion, next/dynamic).
+- Keep GSAP, ScrollTrigger, Motion and Locomotive out of the initial bundle (dynamic imports via lib/gsap.js, LazyMotion, next/dynamic).
 - Never fade large hero text from opacity 0 — it delays LCP. Move it with transforms only.
 - `NEXT_PUBLIC_SITE_URL` (or Netlify's `URL`) sets canonical/sitemap/JSON-LD URLs.
 

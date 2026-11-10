@@ -14,17 +14,17 @@ const CSS = `
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: border-color 0.2s, transform 0.15s;
     overflow: hidden;
   }
-  
-  .theme-toggle-btn:hover {
-    transform: scale(1.05);
+
+  .theme-toggle-btn:active {
+    transform: scale(0.96);
   }
   
   .theme-toggle-icon {
     position: absolute;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: opacity 0.3s cubic-bezier(0.22, 1, 0.36, 1), transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   }
   
   .theme-toggle-icon.sun {

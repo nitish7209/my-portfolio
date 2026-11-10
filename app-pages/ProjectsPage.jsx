@@ -15,21 +15,21 @@ const PROJ_CSS = `
   .proj-page  { max-width: 1100px; margin: 0 auto; padding: 4rem 1.5rem 6rem; }
   .proj-top   { margin-bottom: 48px; animation: projFadeUp .55s both; }
   .proj-tag   { font-family: 'Geist Mono', monospace; font-size: 11px; margin-bottom: 10px; }
-  .proj-h1    { font-family: 'Geist', sans-serif; font-weight: 700; letter-spacing: -.05em; line-height: .94; }
+  .proj-h1    { font-family: 'Geist', sans-serif; font-weight: 500; letter-spacing: -.035em; line-height: 1; }
 
   .proj-filters { display: flex; gap: 8px; margin-bottom: 40px; flex-wrap: wrap; animation: projFadeUp .55s .1s both; }
   .proj-filter  {
     padding: 7px 18px; border-radius: 100px; font-size: 13px;
     background: transparent; cursor: pointer;
-    font-family: 'Geist', sans-serif; transition: all .2s;
+    font-family: 'Geist', sans-serif; transition: color .2s, border-color .2s, background-color .2s;
   }
 
   .proj-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; }
   .proj-card { border-radius: 14px; padding: 2rem; position: relative; }
 
   .proj-year  { position: absolute; top: 18px; right: 18px; font-family: 'Geist Mono', monospace; font-size: 11px; }
-  .proj-num   { font-family: 'Geist', sans-serif; font-size: 52px; font-weight: 700; letter-spacing: -.05em; line-height: 1; margin-bottom: 16px; user-select: none; }
-  .proj-name  { font-family: 'Geist', sans-serif; font-size: 22px; font-weight: 600; letter-spacing: -.03em; margin-bottom: 10px; }
+  .proj-num   { font-family: 'Geist', sans-serif; font-size: 52px; font-weight: 400; letter-spacing: -.04em; line-height: 1; margin-bottom: 16px; user-select: none; }
+  .proj-name  { font-family: 'Geist', sans-serif; font-size: 22px; font-weight: 500; letter-spacing: -.02em; margin-bottom: 10px; }
   .proj-desc  { font-size: 14px; line-height: 1.7; margin-bottom: 20px; }
   .proj-tags  { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; }
   .proj-tag-pill { padding: 3px 10px; border-radius: 100px; font-size: 11px; font-family: 'Geist Mono', monospace; }

@@ -2,6 +2,11 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "export",
+  env: {
+    // Same value in the server and client bundles, so time-based text
+    // (years of experience) hydrates without a mismatch.
+    NEXT_PUBLIC_BUILD_TIME: String(Date.now()),
+  },
   images: {
     unoptimized: true,
   },

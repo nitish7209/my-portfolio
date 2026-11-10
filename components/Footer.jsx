@@ -18,8 +18,8 @@ export default function Footer({ t }) {
             <Link
               href="/"
               style={{
-                fontFamily: "'Geist', sans-serif", fontWeight: 700,
-                fontSize: 16, color: t.text, letterSpacing: "-.04em",
+                fontFamily: "'Geist', sans-serif", fontWeight: 600,
+                fontSize: 16, color: t.text, letterSpacing: "-.02em",
                 display: "flex", alignItems: "center", gap: 8,
                 border: "none", background: "none", cursor: "pointer",
                 marginBottom: 12,
@@ -30,7 +30,7 @@ export default function Footer({ t }) {
                   width: 26, height: 26, borderRadius: 7,
                   background: t.text, color: t.inv,
                   display: "flex", alignItems: "center", justifyContent: "center",
-                  fontSize: 11, fontWeight: 700,
+                  fontSize: 11, fontWeight: 600,
                 }}
                 aria-hidden="true"
               >
@@ -55,7 +55,7 @@ export default function Footer({ t }) {
                 <FaLinkedin size={18} aria-hidden="true" />
               </a>
               <a
-                href="https://github.com/Nitishkumar22"
+                href="https://github.com/nitish7209"
                 aria-label="GitHub"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -73,7 +73,7 @@ export default function Footer({ t }) {
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: 11, color: t.dim, textTransform: "uppercase", letterSpacing: ".06em", marginBottom: 4 }}>
+            <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: 12, color: t.dim, marginBottom: 4 }}>
               Contact
             </div>
             <a
@@ -109,7 +109,7 @@ export default function Footer({ t }) {
           }}
         >
           <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 12, color: t.dim }}>
-            © 2024 — All rights reserved
+            © {new Date().getFullYear()} Nitish Kumar
           </span>
         </div>
       </div>

@@ -23,8 +23,7 @@ const CSS = `
   .marquee-text { margin-right: 20px; }
   .marquee-sep {
     margin-right: 20px;
-    opacity: 0.28;
-    font-size: 10px;
+    opacity: 0.5;
   }
 `;
 
@@ -38,14 +37,14 @@ export default function MarqueeBand({ t }) {
         style={{
           borderTop: `1px solid ${t.border}`,
           borderBottom: `1px solid ${t.border}`,
-          padding: "13px 0",
+          padding: "12px 0",
         }}
       >
         <div className="marquee-inner">
           {items.map((s, i) => (
             <span key={i} className="marquee-item" style={{ color: t.dim }}>
               <span className="marquee-text">{s}</span>
-              <span className="marquee-sep">✦</span>
+              <span className="marquee-sep">/</span>
             </span>
           ))}
         </div>

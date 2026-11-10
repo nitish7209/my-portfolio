@@ -11,31 +11,21 @@ const CSS = `
 
   .experience-card {
     height: 100%;
-    padding: 28px 28px 28px 32px;
+    padding: 28px;
     border-radius: 16px;
     position: relative;
     overflow: hidden;
-    transition: transform 0.3s cubic-bezier(.4,0,.2,1), box-shadow 0.3s, border-color 0.25s;
+    border: 1px solid var(--line);
+    transition: border-color 0.2s;
   }
-  .experience-card::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 3px;
-    background: linear-gradient(to bottom, #6366f1, #a855f7);
-    border-radius: 3px 0 0 3px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  .experience-card:hover { transform: translateY(-5px); }
-  .experience-card:hover::before { opacity: 1; }
+  .experience-card:hover { border-color: var(--line-hover); }
 
   .experience-header { margin-bottom: 20px; }
 
   .experience-role {
     font-family: 'Geist', sans-serif;
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 500;
     letter-spacing: -0.02em;
     margin-bottom: 8px;
   }
@@ -54,13 +44,15 @@ const CSS = `
     font-size: 12px;
   }
 
+  .experience-live {
+    width: 6px; height: 6px; border-radius: 50%;
+    margin-right: -4px;
+  }
+
   .experience-type {
-    padding: 3px 9px;
+    padding: 2px 8px;
     border-radius: 6px;
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    font-weight: 600;
+    font-size: 11px;
   }
 
   .experience-divider {
@@ -96,7 +88,7 @@ const CSS = `
   .swiper-pagination-bullet {
     width: 8px; height: 8px;
     opacity: 0.3;
-    transition: all 0.3s ease;
+    transition: opacity 0.2s ease;
   }
   .swiper-pagination-bullet-active {
     opacity: 1; width: 24px; border-radius: 4px;
@@ -106,11 +98,11 @@ const CSS = `
   .swiper-button-prev {
     width: 38px; height: 38px;
     border-radius: 8px;
-    transition: all 0.2s ease;
+    transition: opacity 0.2s ease;
   }
   .swiper-button-next:after,
   .swiper-button-prev:after {
-    font-size: 14px; font-weight: 700;
+    font-size: 14px; font-weight: 500;
   }
 
   @media (max-width: 768px) {
@@ -119,7 +111,7 @@ const CSS = `
   }
 `;
 
-export default function ExperienceCarousel({ experiences, t }) {
+export default function ExperienceCarousel({ experiences, t, dark }) {
   return (
     <>
       <style>{CSS}</style>
@@ -147,7 +139,8 @@ export default function ExperienceCarousel({ experiences, t }) {
               <div
                 className="experience-card"
                 style={{
-                  border: `1px solid ${t.border}`,
+                  "--line": t.border,
+                  "--line-hover": dark ? "rgba(255,255,255,0.14)" : "rgba(0,0,0,0.14)",
                   background: t.card,
                 }}
               >
@@ -159,11 +152,13 @@ export default function ExperienceCarousel({ experiences, t }) {
                     {exp.company}
                   </div>
                   <div className="experience-meta" style={{ color: t.dim }}>
+                    {exp.period.includes("Present") && (
+                      <span className="experience-live" style={{ background: t.accent }} aria-hidden="true" />
+                    )}
                     <span>{exp.period}</span>
                     <span
                       className="experience-type"
                       style={{
-                        background: `${t.text}12`,
                         color: t.muted,
                         border: `1px solid ${t.border}`,
                       }}
